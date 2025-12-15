@@ -133,7 +133,8 @@ func (f *FlashblocksRPC) Apply(ctx *ExContext) *Component {
 			WithEntrypoint("/app/base-reth-node").
 			WithArgs(
 				"node",
-				"--websocket-url", websocketURL,
+				"--flashblocks-url", websocketURL,
+				"--flashblock-consensus",
 				"--enable-metering",
 			)
 	} else {
