@@ -45,6 +45,9 @@ type OpRecipe struct {
 	// predeploysFile is the path to a JSON file containing additional contracts
 	// to predeploy in the L2 genesis
 	predeploysFile string
+
+	// flashblocksBlockTime is the flashblock block time in milliseconds for op-rbuilder
+	flashblocksBlockTime uint64
 }
 
 func (o *OpRecipe) Name() string {
@@ -67,6 +70,7 @@ func (o *OpRecipe) Flags() *flag.FlagSet {
 	flags.BoolVar(&o.enableWebsocketProxy, "enable-websocket-proxy", false, "Whether to enable websocket proxy")
 	flags.BoolVar(&o.enableChainMonitor, "chain-monitor", false, "Whether to enable chain-monitor")
 	flags.StringVar(&o.predeploysFile, "use-predeploys", "", "Path to JSON file with additional contracts to predeploy in L2 genesis")
+	flags.Uint64Var(&o.flashblocksBlockTime, "flashblocks-block-time", 0, "Flashblock block time in milliseconds for op-rbuilder (0 = use default)")
 	return flags
 }
 
@@ -109,7 +113,8 @@ func (o *OpRecipe) Apply(ctx *ExContext) *Component {
 		externalBuilderRef = Connect("op-reth", "authrpc")
 	} else if o.externalBuilder == "op-rbuilder" {
 		component.AddComponent(ctx, &OpRbuilder{
-			Flashblocks: o.flashblocks,
+			Flashblocks:          o.flashblocks,
+			FlashblocksBlockTime: o.flashblocksBlockTime,
 		})
 		externalBuilderRef = Connect("op-rbuilder", "authrpc")
 	}

@@ -58,7 +58,8 @@ func (r *RollupBoost) Apply(ctx *ExContext) *Component {
 }
 
 type OpRbuilder struct {
-	Flashblocks bool
+	Flashblocks          bool
+	FlashblocksBlockTime uint64 // milliseconds, 0 means use default
 }
 
 func (o *OpRbuilder) Apply(ctx *ExContext) *Component {
@@ -100,11 +101,15 @@ func (o *OpRbuilder) Apply(ctx *ExContext) *Component {
 	}
 
 	if o.Flashblocks {
-		service.WithArgs(
+		args := []string{
 			"--flashblocks.enabled",
 			"--flashblocks.addr", "0.0.0.0",
 			"--flashblocks.port", `{{Port "flashblocks" 1112}}`,
-		)
+		}
+		if o.FlashblocksBlockTime > 0 {
+			args = append(args, "--flashblocks.block-time", strconv.FormatUint(o.FlashblocksBlockTime, 10))
+		}
+		service.WithArgs(args...)
 	}
 
 	return component
