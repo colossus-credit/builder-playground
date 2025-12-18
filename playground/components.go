@@ -76,6 +76,7 @@ func (o *OpRbuilder) Apply(ctx *ExContext) *Component {
 			"--http",
 			"--http.addr", "0.0.0.0",
 			"--http.port", `{{Port "http" 8545}}`,
+			"--http.api", "web3,debug,eth,txpool,net,miner",
 
 			"--chain", "/data/l2-genesis.json",
 			"--datadir", "/data_op_reth",
@@ -83,6 +84,7 @@ func (o *OpRbuilder) Apply(ctx *ExContext) *Component {
 			"--color", "never",
 			"--metrics", `0.0.0.0:{{Port "metrics" 9090}}`,
 			"--port", `{{Port "rpc" 30303}}`,
+			logLevelToRethVerbosity(manifest.ctx.LogLevel),
 		).
 		WithArtifact("/data/jwtsecret", "jwtsecret").
 		WithArtifact("/data/l2-genesis.json", "l2-genesis.json").
@@ -158,12 +160,14 @@ func (f *FlashblocksRPC) Apply(ctx *ExContext) *Component {
 		"--http",
 		"--http.addr", "0.0.0.0",
 		"--http.port", `{{Port "http" 8545}}`,
+		"--http.api", "web3,debug,eth,txpool,net,miner",
 		"--chain", "/data/l2-genesis.json",
 		"--datadir", "/data_op_reth",
 		"--disable-discovery",
 		"--color", "never",
 		"--metrics", `0.0.0.0:{{Port "metrics" 9090}}`,
 		"--port", `{{Port "rpc" 30303}}`,
+		logLevelToRethVerbosity(manifest.ctx.LogLevel),
 	).
 		WithArtifact("/data/jwtsecret", "jwtsecret").
 		WithArtifact("/data/l2-genesis.json", "l2-genesis.json").
@@ -686,6 +690,7 @@ func (o *OpReth) Apply(ctx *ExContext) *Component {
 			"--http",
 			"--http.addr", "0.0.0.0",
 			"--http.port", `{{Port "http" 8545}}`,
+			"--http.api", "web3,debug,eth,txpool,net,engine,miner",
 			"--chain", "/data/l2-genesis.json",
 			"--datadir", "/data_op_reth",
 			"--disable-discovery",
