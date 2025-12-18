@@ -142,6 +142,8 @@ func (f *FlashblocksRPC) Apply(ctx *ExContext) *Component {
 				"--flashblocks-url", websocketURL,
 				"--flashblock-consensus",
 				"--enable-metering",
+				"--rollup.sequencer", Connect("op-rbuilder", "http"),
+				"--rollup.disable-tx-pool-gossip",
 			)
 	} else {
 		service = component.NewService("flashblocks-rpc").
