@@ -76,14 +76,13 @@ func (o *OpRbuilder) Apply(ctx *ExContext) *Component {
 			"--http",
 			"--http.addr", "0.0.0.0",
 			"--http.port", `{{Port "http" 8545}}`,
+
 			"--chain", "/data/l2-genesis.json",
 			"--datadir", "/data_op_reth",
 			"--disable-discovery",
 			"--color", "never",
 			"--metrics", `0.0.0.0:{{Port "metrics" 9090}}`,
 			"--port", `{{Port "rpc" 30303}}`,
-			"--builder.enable-revert-protection",
-			"--rollup.builder-secret-key", "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
 		).
 		WithArtifact("/data/jwtsecret", "jwtsecret").
 		WithArtifact("/data/l2-genesis.json", "l2-genesis.json").
