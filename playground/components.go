@@ -84,7 +84,7 @@ func (o *OpRbuilder) Apply(ctx *ExContext) *Component {
 			"--color", "never",
 			"--metrics", `0.0.0.0:{{Port "metrics" 9090}}`,
 			"--port", `{{Port "rpc" 30303}}`,
-			logLevelToRethVerbosity(manifest.ctx.LogLevel),
+			logLevelToRethVerbosity(ctx.LogLevel),
 		).
 		WithArtifact("/data/jwtsecret", "jwtsecret").
 		WithArtifact("/data/l2-genesis.json", "l2-genesis.json").
@@ -169,7 +169,7 @@ func (f *FlashblocksRPC) Apply(ctx *ExContext) *Component {
 		"--color", "never",
 		"--metrics", `0.0.0.0:{{Port "metrics" 9090}}`,
 		"--port", `{{Port "rpc" 30303}}`,
-		logLevelToRethVerbosity(manifest.ctx.LogLevel),
+		logLevelToRethVerbosity(ctx.LogLevel),
 	).
 		WithArtifact("/data/jwtsecret", "jwtsecret").
 		WithArtifact("/data/l2-genesis.json", "l2-genesis.json").
